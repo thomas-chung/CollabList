@@ -5,6 +5,6 @@ create table tbl_List
     ,CreatedDateTime    datetime not null
     ,Title              nvarchar(2048) not null
     ,Description        nvarchar(max)
-    ,constraint pk_User_UserId primary key (UserId)
+    ,constraint pk_List_ListId primary key (ListId)
     ,constraint fk_User_List_UserId foreign key (OwnerId) references tbl_User(UserId)
 )

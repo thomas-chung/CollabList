@@ -1,4 +1,4 @@
-create procedure prc_ListAdd_1218
+create procedure prc_ListCollaboratorAdd_1218
 (
     @collaboratorId uniqueidentifier
     ,@listId        uniqueidentifier

@@ -18,4 +18,4 @@ begin catch
     throw
 end catch
 
-exec prc_ItemListGet_1218 @itemId
+exec prc_ListItemGet_1218 @itemId

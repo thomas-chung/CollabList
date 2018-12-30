@@ -1,6 +1,6 @@
-create procedure prc_UserAdd_1218
+create procedure prc_UserGet_1218
 (
-    @userId   uniqueidenfier
+    @userId   uniqueidentifier
 )
 as
 

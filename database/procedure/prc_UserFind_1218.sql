@@ -1,6 +1,6 @@
 create procedure prc_UserFind_1218
 (
-    @email   nvarchar(1024)
+    @email   nvarchar(512)
 )
 as
 
