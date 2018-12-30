@@ -26,11 +26,11 @@ namespace CollabList
                 app.UseDeveloperExceptionPage();
             }
 
-            var x = ConfigurationManager.ConnectionStrings["AppUser"];
+            var x = Environment.GetEnvironmentVariable("SQLAZURECONNSTR_AppUser");
 
             app.Run(async (context) =>
             {                
-                await context.Response.WriteAsync($"Hello World! {x.ConnectionString}");
+                await context.Response.WriteAsync($"Hello World! {x}");
             });
         }
     }
