@@ -14,7 +14,7 @@ namespace CollabList.Controller
     {
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(Guid userId)
+        public async Task<ActionResult<User>> Get(Guid userId)
         {
             AzureSqlConnectionProvider provider= new AzureSqlConnectionProvider();
 
