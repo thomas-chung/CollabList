@@ -31,7 +31,7 @@ namespace CollabList
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action=Get}/{id?}");
+                    template: "api/{controller}/{action=Get}/{id?}");
             });
         }
     }
