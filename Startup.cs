@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -25,9 +26,11 @@ namespace CollabList
                 app.UseDeveloperExceptionPage();
             }
 
+            var x = ConfigurationManager.ConnectionStrings["AppUser"];
+
             app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
+            {                
+                await context.Response.WriteAsync($"Hello World! {x.ConnectionString}");
             });
         }
     }
