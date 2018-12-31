@@ -14,6 +14,8 @@ begin
     begin try
         insert into tbl_User (UserId, Email, CreatedDateTime) 
             values (@newUserId, @email, getutcdate())
+
+        commit tran UserAdd
     end try
     begin catch
         rollback tran UserAdd;
