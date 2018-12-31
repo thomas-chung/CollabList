@@ -41,7 +41,7 @@ namespace CollabList.Controller
                         else
                         {
                             // Found no record return a 404
-                            return BadRequest();
+                            return NotFound();
                         }
                     }
                 }
