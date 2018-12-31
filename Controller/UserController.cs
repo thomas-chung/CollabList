@@ -13,7 +13,6 @@ namespace CollabList.Controller
     [ApiController]
     public class UserController : ControllerBase
     {
-
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> Get(Guid id)
         {
@@ -32,11 +31,7 @@ namespace CollabList.Controller
                     {
                         if (reader.Read())
                         {
-                            Guid foundUserId = reader.GetGuid(reader.GetOrdinal("UserId"));
-                            string email = reader.GetString(reader.GetOrdinal("Email"));
-                            DateTime createdDateTime = reader.GetDateTime(reader.GetOrdinal("CreatedDateTime"));
-
-                            return new User(foundUserId, email, createdDateTime);
+                            return this.ReadUserRow(reader);
                         }
                         else
                         {
@@ -46,6 +41,39 @@ namespace CollabList.Controller
                     }
                 }
             }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<User>> Add([FromBody]string email)
+        {
+            AzureSqlConnectionProvider provider= new AzureSqlConnectionProvider();
+
+            using (SqlConnection connection = provider.CreateConnection())
+            {
+                await connection.OpenAsync();
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "dbo.prc_UserAdd_1218";
+                    command.Parameters.Add(new SqlParameter("@email", SqlDbType.NVarChar, 512) { Value = email} );
+                    
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        reader.Read();
+
+                        return this.ReadUserRow(reader);
+                    }
+                }
+            }
+        }
+
+        private User ReadUserRow(SqlDataReader reader)
+        {
+            Guid foundUserId = reader.GetGuid(reader.GetOrdinal("UserId"));
+            string addedEmail = reader.GetString(reader.GetOrdinal("Email"));
+            DateTime createdDateTime = reader.GetDateTime(reader.GetOrdinal("CreatedDateTime"));
+
+            return new User(foundUserId, addedEmail, createdDateTime);
         }
     }
 }
