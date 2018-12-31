@@ -9,12 +9,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace CollabList.Controller
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class UserController : ControllerBase
     {
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(Guid userId)
+        public async Task<ActionResult<User>> Get(Guid id)
         {
             AzureSqlConnectionProvider provider= new AzureSqlConnectionProvider();
 
@@ -25,7 +26,7 @@ namespace CollabList.Controller
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.CommandText = "dbo.prc_UserGet_1218";
-                    command.Parameters.Add(new SqlParameter("@userId", SqlDbType.UniqueIdentifier) { Value = userId} );
+                    command.Parameters.Add(new SqlParameter("@userId", SqlDbType.UniqueIdentifier) { Value = id} );
                     
                     using (SqlDataReader reader = await command.ExecuteReaderAsync())
                     {
@@ -40,7 +41,7 @@ namespace CollabList.Controller
                         else
                         {
                             // Found no record return a 404
-                            return NotFound();
+                            return BadRequest();
                         }
                     }
                 }
